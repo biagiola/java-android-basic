@@ -8,29 +8,21 @@
 
     <EditText
         android:id="@+id/result"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="207dp"
+        android:layout_height="43dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:ems="10"
-        android:focusable="false"
+        android:focusable="auto"
         android:focusableInTouchMode="false"
         android:inputType="numberSigned|numberDecimal"
         app:layout_constraintBottom_toTopOf="@+id/newNumber"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="8dp"
-        android:text="4"
-        app:layout_constraintStart_toStartOf="@+id/button7"
-        app:layout_constraintTop_toBottomOf="@+id/button7" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.634" />
 
     <Button
         android:id="@+id/button5"
@@ -68,8 +60,10 @@
         android:layout_height="48dp"
         android:layout_marginTop="8dp"
         android:text="0"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/button1"
-        app:layout_constraintTop_toBottomOf="@+id/button1" />
+        app:layout_constraintTop_toBottomOf="@+id/button1"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/buttonDot"
@@ -144,7 +138,7 @@
         android:id="@+id/button7"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="16dp"
         android:text="7"
         app:layout_constraintStart_toStartOf="@+id/newNumber"
         app:layout_constraintTop_toBottomOf="@+id/newNumber" />
@@ -187,7 +181,6 @@
         android:layout_marginLeft="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:text="TextView"
         android:textSize="18sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/newNumber"
         app:layout_constraintEnd_toStartOf="@+id/newNumber"
@@ -196,18 +189,39 @@
 
     <EditText
         android:id="@+id/newNumber"
-        android:layout_width="wrap_content"
-        android:layout_height="45dp"
+        android:layout_width="211dp"
+        android:layout_height="57dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
+        android:layout_marginBottom="420dp"
         android:ems="10"
-        android:focusable="auto"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:inputType="numberSigned"
         android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="78dp" />
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="8dp"
+        android:text="4"
+        app:layout_constraintStart_toStartOf="@+id/button7"
+        app:layout_constraintTop_toBottomOf="@+id/button7" />
+
+    <Button
+        android:id="@+id/buttonNeg"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:text="Button"
+        app:layout_constraintStart_toEndOf="@+id/buttonDivide"
+        app:layout_constraintTop_toTopOf="@+id/buttonDivide" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
