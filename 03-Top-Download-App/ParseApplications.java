@@ -27,17 +27,14 @@ public class ParseApplications {
         String textValue = "";
 
         try {
-
             XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
             factory.setNamespaceAware(true);
-
             XmlPullParser xpp = factory.newPullParser();
             xpp.setInput(new StringReader(xmlData));
             int eventType = xpp.getEventType();
-
             while(eventType != XmlPullParser.END_DOCUMENT) {
                 String tagName = xpp.getName();
-                switch(eventType) {
+                switch (eventType) {
                     case XmlPullParser.START_TAG:
                         Log.d(TAG, "parse: Starting tag for " + tagName);
                         if("entry".equalsIgnoreCase(tagName)) {
@@ -63,7 +60,7 @@ public class ParseApplications {
                             } else if("releaseDate".equalsIgnoreCase(tagName)) {
                                 currentRecord.setReleaseDate(textValue);
                             } else if("summary".equalsIgnoreCase(tagName)) {
-                                currentRecord.setSummary(tagName);
+                                currentRecord.setSummary(textValue);
                             } else if("image".equalsIgnoreCase(tagName)) {
                                 currentRecord.setImageURL(textValue);
                             }
@@ -71,15 +68,21 @@ public class ParseApplications {
                         break;
 
                     default:
-                        // nothing else to do.
+                        // Nothing else to do.
                 }
+                eventType = xpp.next();
+
             }
+            for (FeedEntry app: applications) {
+                Log.d(TAG, "******************");
+                Log.d(TAG, app.toString());
+            }
+
         } catch(Exception e) {
             status = false;
             e.printStackTrace();
         }
 
         return status;
-
     }
 }

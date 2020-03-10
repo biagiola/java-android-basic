@@ -4,6 +4,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,26 +17,36 @@ import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
+    private ListView listApps;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // The container where we put all the items
+        listApps = (ListView) findViewById(R.id.xmlListView);
 
-        Log.d(TAG, "onCreate: starting Async task");
+        Log.d(TAG, "onCreate: starting Asynctask");
         DownloadData downloadData = new DownloadData();
         downloadData.execute("http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topfreeapplications/limit=10/xml");
         Log.d(TAG, "onCreate: done");
 
     }
 
-    private static class DownloadData extends AsyncTask<String, Void, String> {
+    private class DownloadData extends AsyncTask<String, Void, String> {
         private static final String TAG = "DownloadData";
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             Log.d(TAG, "onPostExecute: parameter is " + s);
+            ParseApplications parseApplications = new ParseApplications();
+            parseApplications.parse(s);
+
+            // must to pass the context, the layout where to put the content, and the method to grab the list of content
+            ArrayAdapter<FeedEntry> arrayAdapter = new ArrayAdapter<>(MainActivity.this, R.layout.list_item, parseApplications.getApplications());
+            listApps.setAdapter(arrayAdapter);
         }
 
         @Override
@@ -72,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
                 reader.close();
+
                 return xmlResult.toString();
             } catch(MalformedURLException e) {
                 Log.e(TAG, "downloadXML: Invalid URL " + e.getMessage());
