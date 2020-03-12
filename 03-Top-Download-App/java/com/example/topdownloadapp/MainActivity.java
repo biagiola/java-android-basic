@@ -22,6 +22,8 @@ import java.net.URL;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private ListView listApps;
+    private String feedUrl = "http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topfreeapplications/limit=%d/xml";
+    private int feedLimit = 10;
 
 
     @Override
@@ -30,8 +32,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         // The container where we put all the items
         listApps = (ListView) findViewById(R.id.xmlListView);
-
-        downloadUrl("http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topfreeapplications/limit=10/xml");
+        downloadUrl(String.format(feedUrl, feedLimit));
     }
 
     @Override
@@ -41,29 +42,44 @@ public class MainActivity extends AppCompatActivity {
         // so we can call getMenuInflator to get the file inflator directly and then
         // call it inflate method and give it the resource  ID od the xml
         getMenuInflater().inflate(R.menu.feeds_menu, menu);
+
+        if(feedLimit == 10) {
+            menu.findItem(R.id.mnu10).setChecked(true);
+        } else {
+            menu.findItem(R.id.mnu25).setChecked(true);
+        }
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        String feedUrl;
 
         switch(id) {
             case R.id.mnuFree:
-                feedUrl ="http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topfreeapplications/limit=10/xml";
+                feedUrl ="http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topfreeapplications/limit=%d/xml";
                 break;
             case R.id.mnuPaid:
-                feedUrl ="http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/toppaidapplications/limit=10/xml";
+                feedUrl ="http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/toppaidapplications/limit=%d/xml";
                 break;
             case R.id.mnuSongs:
-                feedUrl ="http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topsongs/limit=10/xml";
+                feedUrl ="http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topsongs/limit=%d/xml";
+                break;
+            case R.id.mnu10:
+            case R.id.mnu25:
+                if(!item.isChecked()) {
+                    item.setChecked(true);
+                    feedLimit = 35 - feedLimit;
+                    Log.d(TAG, "onOptionsItemSelected" + item.getTitle() +" setting feedLimit to " + feedLimit);
+                } else {
+                    Log.d(TAG, "onOptionsItemSelected" + item.getTitle() +"feedLimit unchanged");
+                }
                 break;
             default:
                 return super.onOptionsItemSelected(item);
         }
 
-        downloadUrl(feedUrl);
+        downloadUrl(String.format(feedUrl, feedLimit));
         return true;
 
     }
@@ -79,6 +95,16 @@ public class MainActivity extends AppCompatActivity {
         private static final String TAG = "DownloadData";
 
         @Override
+        protected String doInBackground(String... strings) {
+            Log.d(TAG, "doInBackground: starts with " + strings[0]);
+            String rssFeed = downloadXML(strings[0]);
+            if(rssFeed == null) {
+                Log.e(TAG, "doInBackground: Error downloading");
+            }
+            return rssFeed;
+        }
+
+        @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             Log.d(TAG, "onPostExecute: parameter is " + s);
@@ -88,19 +114,10 @@ public class MainActivity extends AppCompatActivity {
             // must to pass the context, the layout where to put the content, and the method to grab the list of content
             // ArrayAdapter<FeedEntry> arrayAdapter = new ArrayAdapter<>(MainActivity.this, R.layout.list_item, parseApplications.getApplications());
             // listApps.setAdapter(arrayAdapter);
+
             // same as above but more efficient way
             FeedAdapter feedAdapter = new FeedAdapter(MainActivity.this, R.layout.list_record, parseApplications.getApplications());
             listApps.setAdapter(feedAdapter);
-        }
-
-        @Override
-        protected String doInBackground(String... strings) {
-            Log.d(TAG, "doInBackground: starts with " + strings[0]);
-            String rssFeed = downloadXML(strings[0]);
-            if(rssFeed == null) {
-                Log.e(TAG, "doInBackground: Error downloading");
-            }
-            return rssFeed;
         }
 
         private String downloadXML(String urlPath) {

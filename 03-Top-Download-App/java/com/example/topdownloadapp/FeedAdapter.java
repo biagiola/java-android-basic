@@ -53,7 +53,7 @@ public class FeedAdapter extends ArrayAdapter {
 
         viewHolder.tvName.setText(currentApp.getName());
         viewHolder.tvArtist.setText(currentApp.getArtist());
-        viewHolder.tvSummary.setText(currentApp.getSummary());
+        //viewHolder.tvSummary.setText(currentApp.getSummary());
 
         return convertView;
     }

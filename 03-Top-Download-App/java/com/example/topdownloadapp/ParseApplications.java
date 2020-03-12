@@ -22,16 +22,18 @@ public class ParseApplications {
 
     public boolean parse(String xmlData) {
         boolean status = true;
-        FeedEntry currentRecord = null;
         boolean inEntry = false;
+        FeedEntry currentRecord = null;
         String textValue = "";
 
         try {
             XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
             factory.setNamespaceAware(true);
+
             XmlPullParser xpp = factory.newPullParser();
             xpp.setInput(new StringReader(xmlData));
             int eventType = xpp.getEventType();
+
             while(eventType != XmlPullParser.END_DOCUMENT) {
                 String tagName = xpp.getName();
                 switch (eventType) {
@@ -42,11 +44,9 @@ public class ParseApplications {
                             currentRecord = new FeedEntry();
                         }
                         break;
-
                     case XmlPullParser.TEXT:
                         textValue = xpp.getText();
                         break;
-
                     case XmlPullParser.END_TAG:
                         Log.d(TAG, "parse: Ending tag for " + tagName);
                         if(inEntry) {
@@ -66,13 +66,12 @@ public class ParseApplications {
                             }
                         }
                         break;
-
                     default:
                         // Nothing else to do.
                 }
                 eventType = xpp.next();
-
             }
+
             for (FeedEntry app: applications) {
                 Log.d(TAG, "******************");
                 Log.d(TAG, app.toString());
