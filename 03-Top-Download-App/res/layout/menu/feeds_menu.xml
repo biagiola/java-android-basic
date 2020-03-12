@@ -16,7 +16,7 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/mnu10"
-            android:checkable="true"
+            android:checked="true"
             android:title="@string/top10" />
         <item
             android:id="@+id/mnu25"
