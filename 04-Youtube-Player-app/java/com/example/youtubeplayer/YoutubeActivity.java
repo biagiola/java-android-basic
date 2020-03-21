@@ -25,19 +25,16 @@ public class YoutubeActivity extends YouTubeBaseActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_youtube);
-//        ConstraintLayout constraintLayout = (ConstraintLayout) findViewById(R.id.activity_youtube);
 
+        // Set the resource file and the java file
         ConstraintLayout layout = (ConstraintLayout) getLayoutInflater().inflate(R.layout.activity_youtube, null);
         setContentView(layout);
-//
-//        Button button1 = new Button(this);
-//        button1.setLayoutParams(new ConstraintLayout.LayoutParams(300, 80));
-//        button1.setText("Button added");
-//        layout.addView(button1);
 
+        // Set the youtube player with weight and height
         YouTubePlayerView playerView = new YouTubePlayerView(this);
         playerView.setLayoutParams(new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
+        // Add the youtube player to the layout and initialize
         layout.addView(playerView);
         playerView.initialize(GOOGLE_API_KEY, this);
 
