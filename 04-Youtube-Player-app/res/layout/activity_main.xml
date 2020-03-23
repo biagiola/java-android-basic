@@ -13,7 +13,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
-        android:text="@+string/btn_one"
+        android:text="@string/btn_one"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="@+string/btn_two"
+        android:text="@string/btn_two"
         app:layout_constraintStart_toStartOf="@+id/btnPlaySingle"
         app:layout_constraintTop_toBottomOf="@+id/btnPlaySingle" />
 </androidx.constraintlayout.widget.ConstraintLayout>
