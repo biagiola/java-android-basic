@@ -37,23 +37,30 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<!--        <activity android:name=".YoutubeActivity">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
+        <activity android:name=".YoutubeActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".StandaloneActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+<!--        <activity-->
+<!--            android:name=".YoutubeActivity"-->
+<!--            android:label="Youtube Player pibe">-->
+
 <!--        </activity>-->
-        <activity
-            android:name=".YoutubeActivity"
-            android:label="Youtube Player pibe">
+<!--        <activity-->
+<!--            android:name=".StandaloneActivity"-->
+<!--            android:label="Standalone Activity">-->
 
-        </activity>
-        <activity
-            android:name=".StandaloneActivity"
-            android:label="Standalone Activity">
-
-        </activity>
+<!--        </activity>-->
     </application>
 
 </manifest>
